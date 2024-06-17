@@ -71,5 +71,48 @@ sudo apt install v4l-utils
   ```
 
 ## Check the RTSP stream
-- VLC
+- VLC player
 - Android App
+
+## some issues
+### 1.when use a usb camera, RTSP video stream cannot render successfully:
+- 1.1 check the usb camera framesizes and framrate:
+```bashrc
+v4l2-ctl -d /dev/video2 --list-formats-ext
+
+ioctl: VIDIOC_ENUM_FMT
+Type: Video Capture
+
+[0]: 'MJPG' (Motion-JPEG, compressed)
+  Size: Discrete 1280x720
+    Interval: Discrete 0.033s (30.000 fps)
+  Size: Discrete 640x480
+    Interval: Discrete 0.040s (25.000 fps)
+[1]: 'YUYV' (YUYV 4:2:2)
+  Size: Discrete 1280x720
+    Interval: Discrete 0.100s (10.000 fps)
+  Size: Discrete 640x480
+    Interval: Discrete 0.040s (25.000 fps)
+```
+Get the frame rate from "YUYV" part,  the framesize is 1280x720 while the framrate is 10; the framesize is 640x480 while the framrate is 25; 
+
+- 1.2 modify the parameter.yaml 
+
+when we use the 640x480 framesize:
+```bashrc
+ramerate: "25"
+caps_2: "/1,width=640,height=480"
+```  
+when we use the 1280x720 framesize:
+```bashrc
+ramerate: "10"
+caps_2: "/1,width=1280,height=720"
+```
+- 1.3 You should colcon build  every time when you modify the .yaml file
+```bashrc
+colcon build --packages-select image2rtsp
+```
+- 1.4 ps. check the full info. about the usb camera
+```bashrc
+sudo v4l2-ctl -d /dev/video2 --all
+```
