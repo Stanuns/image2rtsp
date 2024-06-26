@@ -24,7 +24,7 @@ sudo apt install v4l-utils
 
 - Navigate to the home directory, create a new directory named `ros2_ws/src`, and then change the current working directory to `ros2_ws/src`:
   ```bashrc
-  cd
+  cd ~
   mkdir -p ros2_ws/src
   cd ros2_ws/src/
   ```
@@ -115,4 +115,31 @@ colcon build --packages-select image2rtsp
 - 1.4 ps. check the full info. about the usb camera
 ```bashrc
 sudo v4l2-ctl -d /dev/video2 --all
+```
+
+### 2.apt install 遇到依赖问题
+```bashrc
+sudo apt-get install libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev libgstrtspserver-1.0-dev gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+libgstreamer-plugins-base1.0-dev is already the newest version (1.20.3-1).
+Some packages could not be installed. This may mean that you have
+requested an impossible situation or if you are using the unstable
+distribution that some required packages have not yet been created
+or been moved out of Incoming.
+The following information may help to resolve the situation:
+
+The following packages have unmet dependencies:
+ gstreamer1.0-plugins-bad : Depends: libgstreamer-plugins-bad1.0-0 (= 1.20.3-0ubuntu1.1) but 1.20.3-0ubuntu1 is to be installed
+ gstreamer1.0-plugins-bad-apps : Depends: gstreamer1.0-plugins-bad (= 1.20.3-0ubuntu1) but 1.20.3-0ubuntu1.1 is to be installed
+ libgstreamer-plugins-bad1.0-dev : Depends: libgstreamer-plugins-bad1.0-0 (= 1.20.3-0ubuntu1.1) but 1.20.3-0ubuntu1 is to be installed
+                                   Depends: libgstreamer-opencv1.0-0 (= 1.20.3-0ubuntu1.1) but 1.20.3-0ubuntu1 is to be installed
+                                   Depends: gir1.2-gst-plugins-bad-1.0 (= 1.20.3-0ubuntu1.1) but 1.20.3-0ubuntu1 is to be installed
+ libgstreamer-plugins-good1.0-dev : Depends: libgstreamer-plugins-good1.0-0 (= 1.20.3-0ubuntu1.1) but 1.20.3-0ubuntu1 is to be installed
+E: Error, pkgProblemResolver::Resolve generated breaks, this may be caused by held packages.
+```
+[use "aptitude install" instead of "apt install"](https://stackoverflow.com/questions/26571326/how-do-i-resolve-the-following-packages-have-unmet-dependencies)
+```bashrc
+sudo aptitude install libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev libgstrtspserver-1.0-dev gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad
 ```
