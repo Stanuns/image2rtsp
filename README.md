@@ -143,3 +143,16 @@ E: Error, pkgProblemResolver::Resolve generated breaks, this may be caused by he
 ```bashrc
 sudo aptitude install libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev libgstreamer-plugins-bad1.0-dev libgstrtspserver-1.0-dev gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad
 ```
+
+### 3.when use a usb camera which has rendered a image topic:
+- 3.1 Check the width and height of the image topic 
+```bashrc
+ros2 topic echo /oak/rgb/image_raw --no-ar
+``` 
+
+- 3.2 check the frequence of the image topic 
+```bashrc
+ros2 topic hz /oak/rgb/image_raw
+```
+
+- 3.3 use the width height and frequence(framerate) above into config/parameters.yaml
